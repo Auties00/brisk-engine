@@ -24,23 +24,20 @@ It is written in pure dart and can be used in all devices without platform-speci
 /// using HttpDownloadEngine.requestFileInfo(url). Note that buildDownloadItem(url)
 /// automatically uses an isolate to request for file information while requestFileInfo
 /// does so in the same isolate.
-final downloadItem = await
-HttpDownloadEngine.buildDownloadItem
-(
-url);
+final downloadItem = await HttpDownloadEngine.buildDownloadItem(url);
 
 /// Start the engine
 DownloadEngine.start(
-downloadItem,
-settings,
-onButtonAvailability: (message) {
-/// Handle button availability. A download should only be paused or resumed
-/// when the buttons are available as notified in this method. Otherwise, it could
-/// lead to a corrupted file.
-},
-onDownloadProgress: (message) {
-/// Updates on the download progress will be notified here
-},
+  downloadItem,
+  settings,
+  onButtonAvailability: (message) {
+  /// Handle button availability. A download should only be paused or resumed
+  /// when the buttons are available as notified in this method. Otherwise, it could
+  /// lead to a corrupted file.
+  },
+  onDownloadProgress: (message) {
+  /// Updates on the download progress will be notified here
+  },
 );
 
 /// You can use the UID which is set on the downloadItem to pause/resume the download
@@ -49,11 +46,6 @@ onDownloadProgress: (message) {
 DownloadEngine.pause(uid);
 
 /// Resume the download
-DownloadEngine
-.
-resume
-(
-uid
-);
+DownloadEngine.resume(uid);
 
 ```

@@ -25,7 +25,7 @@ It is written in pure dart and can be used on all devices without platform-speci
 /// Build the download item either by using this method or manually building it
 /// using HttpDownloadEngine.requestFileInfo(url). Note that buildDownloadItem(url)
 /// automatically uses an isolate to request for file information while requestFileInfo
-/// does so in the same isolate.
+/// does so in the same isolate.Therefore, it's recommended to use the below method.
 final downloadItem = await HttpDownloadEngine.buildDownloadItem(url);
 
 /// Start the engine

@@ -1,3 +1,4 @@
+[![Pub](https://img.shields.io/pub/v/brisk_engine.svg?style=popout&include_prereleases)](https://pub.dev/packages/brisk_engine)
 [![license](https://img.shields.io/github/license/AminBhst/brisk-engine)](https://github.com/AminBhst/brisk-engine/blob/main/LICENSE)
 <p align="center">
 <p align="center">Ultra-fast, highly efficient download engine written in pure dart </pal>

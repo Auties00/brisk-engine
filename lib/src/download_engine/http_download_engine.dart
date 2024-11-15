@@ -210,7 +210,7 @@ class HttpDownloadEngine {
       engineChannel.logger?.info(
         "Sending refresh segment for conn ${connectionChannel.connectionNumber}",
       );
-      _sendRefreshSegmentCommand_ReuseConnection(connectionChannel);
+      _sendRefreshSegmentCommandReuseConnection(connectionChannel);
     });
   }
 
@@ -275,15 +275,15 @@ class HttpDownloadEngine {
     try {
       engineChannel.segmentTree!.split();
     } catch (e) {
-      logger?.error("_refreshConnectionSegments:: Fatal! ${e}");
+      logger?.error("_refreshConnectionSegments:: Fatal! $e");
       return;
     }
     final nodes = engineChannel.segmentTree!.lowestLevelNodes;
     logger?.info("refreshing connection segments...");
     logger?.info("Current segment tree lowest level nodes:");
-    nodes.forEach(
-      (element) => engineChannel.logger?.info(element.segment.toString()),
-    );
+    for (var element in nodes) {
+      engineChannel.logger?.info(element.segment.toString());
+    }
     final segmentNodes = engineChannel.segmentTree!.lowestLevelNodes;
     engineChannel.connectionChannels.forEach((connNum, connectionChannel) {
       final relatedSegmentNode =
@@ -332,16 +332,16 @@ class HttpDownloadEngine {
   /// Handles the messages coming from [BaseHttpDownloadConnection]
   static void _handleConnectionMessages(message) async {
     switch (message.runtimeType) {
-      case DownloadProgressMessage:
+      case DownloadProgressMessage _:
         _handleProgressUpdates(message);
         break;
-      case ConnectionSegmentMessage:
+      case ConnectionSegmentMessage _:
         _handleSegmentMessage(message);
         break;
-      case ConnectionHandshake:
+      case ConnectionHandshake _:
         _handleConnectionHandshakeMessage(message);
         break;
-      case LogMessage:
+      case LogMessage _:
         _handleLogMessage(message);
         break;
       default:
@@ -483,7 +483,7 @@ class HttpDownloadEngine {
     );
     newConnectionNode.setLastUpdateMillis();
     if (message.reuseConnection) {
-      _sendStartCommand_ReuseConnection(
+      _sendStartCommandReuseConnection(
         message.downloadItem,
         newConnectionNode.connectionNumber,
         newConnectionNode.segment,
@@ -516,7 +516,7 @@ class HttpDownloadEngine {
     parent.setLastUpdateMillis();
     final connectionNode = parent.rightChild!;
     if (message.reuseConnection) {
-      _sendStartCommand_ReuseConnection(
+      _sendStartCommandReuseConnection(
         message.downloadItem,
         connectionNode.connectionNumber,
         connectionNode.segment,
@@ -538,7 +538,7 @@ class HttpDownloadEngine {
     parent.leftChild?.setLastUpdateMillis();
   }
 
-  static void _sendStartCommand_ReuseConnection(
+  static void _sendStartCommandReuseConnection(
     DownloadItemModel downloadItem,
     int connectionNumber,
     Segment segment,
@@ -640,7 +640,7 @@ class HttpDownloadEngine {
   }
 
   /// Reassigns a connection that has finished receiving its bytes to a new segment
-  static void _sendRefreshSegmentCommand_ReuseConnection(
+  static void _sendRefreshSegmentCommandReuseConnection(
     DownloadConnectionChannel connectionChannel,
   ) {
     final downloadId = connectionChannel.downloadItem!.uid;
@@ -700,11 +700,11 @@ class HttpDownloadEngine {
         .where((conn) => conn.segment == targetNode.segment)
         .firstOrNull;
     logger?.info("Segment tree in reuseConnection :");
-    segmentTree.lowestLevelNodes.forEach((element) {
+    for (var element in segmentTree.lowestLevelNodes) {
       logger?.info(
         "${element.segment} ==> ${element.connectionNumber} ==> ${element.segmentStatus}",
       );
-    });
+    }
     if (oldestSegmentConnection == null) {
       logger?.error("Fatal! Failed to find oldest connection! List is :");
       engineChannel.connectionChannels.forEach((_, conn) {
@@ -1028,7 +1028,7 @@ class HttpDownloadEngine {
         ?..writeLogBuffer()
         ..logBuffer.clear()
         ..flushTimer?.cancel();
-      _engineChannels.remove(engineChannel);
+      _engineChannels.remove(downloadItem.uid);
     }
     return assembleSuccessful;
   }
@@ -1184,10 +1184,10 @@ class HttpDownloadEngine {
     logger?.info("Missing byte range check : $missingBytes");
     final nodes =
         _engineChannels[downloadItem.uid]!.segmentTree!.lowestLevelNodes;
-    nodes.forEach((element) {
+    for (var element in nodes) {
       logger?.info(
           "LowestLevelNode:: ${element.segment} :: ${element.segmentStatus}");
-    });
+    }
     return missingBytes.isEmpty;
   }
 
@@ -1311,7 +1311,7 @@ class HttpDownloadEngine {
         throw Exception({"Could not retrieve result from the given URL"});
       }
       final contentLength = int.parse(headers["content-length"]!);
-      final fileName = Uri.decodeComponent(filename!);
+      final fileName = Uri.decodeComponent(filename);
       final supportsPause = _checkDownloadPauseSupport(headers);
       final data = FileInfo(
         supportsPause,

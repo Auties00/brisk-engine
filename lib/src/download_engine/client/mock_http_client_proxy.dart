@@ -73,7 +73,7 @@ class MockHttpClientProxy implements BaseClient {
     final random = Random();
     final chunkSize = 12001;
     for (int i = 0; i < bytes.length; i += chunkSize) {
-      if (this._closed) {
+      if (_closed) {
         break;
       }
       final end = (i + chunkSize < bytes.length) ? i + chunkSize : bytes.length;
@@ -88,7 +88,7 @@ class MockHttpClientProxy implements BaseClient {
 
   @override
   void close() {
-    this._closed = true;
+    _closed = true;
   }
 
   @override

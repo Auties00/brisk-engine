@@ -6,7 +6,7 @@ import 'package:dartx/dartx.dart';
 import 'package:path/path.dart';
 
 /// [first] : either the first file name or the sum of the previous reduce operation
-int addTempFilesLength_reduce(String first, String secondFileName) {
+int addTempFilesLengthReduce(String first, String secondFileName) {
   if (first.isInt) {
     return first.toInt() + getTempFileLength(secondFileName);
   }

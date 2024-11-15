@@ -48,17 +48,17 @@ class EngineChannel extends IsolateChannelWrapper {
       connectionChannels.values.any((conn) => conn.awaitingResetResponse);
 
   @override
-  void onEventReceived(message) {
-    if (message is! DownloadIsolateMessage) {
+  void onEventReceived(event) {
+    if (event is! DownloadIsolateMessage) {
       return;
     }
-    downloadItem = message.downloadItem;
-    buildLogger(message);
-    if (message.command == DownloadCommand.pause) {
+    downloadItem = event.downloadItem;
+    buildLogger(event);
+    if (event.command == DownloadCommand.pause) {
       paused = true;
       lastPauseTimeMillis = DateTime.now().millisecondsSinceEpoch;
     }
-    if (message.command == DownloadCommand.start) {
+    if (event.command == DownloadCommand.start) {
       paused = false;
       lastStartTimeMillis = DateTime.now().millisecondsSinceEpoch;
     }

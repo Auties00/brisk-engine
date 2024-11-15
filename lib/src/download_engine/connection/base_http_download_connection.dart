@@ -851,7 +851,7 @@ abstract class BaseHttpDownloadConnection {
     }
 
     return fileNames
-        .reduce((f1, f2) => addTempFilesLength_reduce(f1, f2).toString())
+        .reduce((f1, f2) => addTempFilesLengthReduce(f1, f2).toString())
         .toInt();
   }
 

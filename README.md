@@ -43,9 +43,9 @@ DownloadEngine.start(
 /// You can use the UID which is set on the downloadItem to pause/resume the download
 
 /// Pause the download
-DownloadEngine.pause(uid);
+DownloadEngine.pause(downloadItem.uid);
 
 /// Resume the download
-DownloadEngine.resume(uid);
+DownloadEngine.resume(downloadItem.uid);
 
 ```

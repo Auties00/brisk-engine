@@ -1,7 +1,7 @@
 name: brisk_engine
-description: A starting point for Dart libraries or applications.
+description: Ultra-fast, highly efficient download engine written in pure dart
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+homepage: https://github.com/AminBhst/brisk-engine
 
 environment:
   sdk: ^3.4.0

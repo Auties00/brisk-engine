@@ -1,5 +1,5 @@
 class DownloadItemModel {
-  int id;
+  int? id;
 
   String uid;
 
@@ -9,7 +9,7 @@ class DownloadItemModel {
 
   String downloadUrl;
 
-  final DateTime startDate;
+  DateTime? startDate;
 
   int contentLength;
 
@@ -24,12 +24,12 @@ class DownloadItemModel {
   String status;
 
   DownloadItemModel({
-    required this.id,
+    this.id,
     this.uid = "",
     required this.fileName,
     this.filePath = '',
     required this.downloadUrl,
-    required this.startDate,
+    this.startDate,
     this.finishDate,
     required this.progress,
     this.contentLength = 0,

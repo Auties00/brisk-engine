@@ -4,9 +4,8 @@ import 'dart:isolate';
 
 import 'package:brisk_engine/src/download_engine/connection/base_http_download_connection.dart';
 import 'package:brisk_engine/src/download_engine/connection/http_download_connection.dart';
-import 'package:brisk_engine/src/download_engine/connection/mock_http_download_connection.dart';
-import 'package:brisk_engine/src/download_engine/download_command.dart';
-import 'package:brisk_engine/src/download_engine/download_status.dart';
+import 'package:brisk_engine/src/download_engine/constants/download_command.dart';
+import 'package:brisk_engine/src/download_engine/constants/download_status.dart';
 import 'package:brisk_engine/src/download_engine/message/connection_handshake_message.dart';
 import 'package:brisk_engine/src/download_engine/message/download_isolate_message.dart';
 import 'package:dartx/dartx.dart';
@@ -14,11 +13,11 @@ import 'package:stream_channel/isolate_channel.dart';
 import 'package:stream_channel/stream_channel.dart';
 
 class DownloadConnectionInvoker {
-  static final Map<int, Map<int, BaseHttpDownloadConnection>> _connections = {};
+  static final Map<String, Map<int, BaseHttpDownloadConnection>> _connections = {};
 
-  static final Map<int, Pair<bool, StreamChannel>> stopCommandTrackerMap = {};
+  static final Map<String, Pair<bool, StreamChannel>> stopCommandTrackerMap = {};
 
-  static final Map<int, Set<int>> forceApplyReuseConnections = {};
+  static final Map<String, Set<int>> forceApplyReuseConnections = {};
 
   static Timer? _commandTrackerTimer;
 
@@ -47,17 +46,17 @@ class DownloadConnectionInvoker {
     final channel = IsolateChannel.connectSend(sendPort);
     _runCommandTrackerTimer();
     channel.stream.cast<DownloadIsolateMessage>().listen((data) {
-      final id = data.downloadItem.id;
-      _connections[id] ??= {};
+      final uid = data.downloadItem.uid;
+      _connections[uid] ??= {};
       final connectionNumber = data.connectionNumber;
-      BaseHttpDownloadConnection? conn = _connections[id]![connectionNumber!];
+      BaseHttpDownloadConnection? conn = _connections[uid]![connectionNumber!];
       _setStopCommandTracker(data, channel);
       if (conn == null) {
         conn = _buildDownloadConnection(data) as BaseHttpDownloadConnection?;
         if (data.settings.loggerEnabled) {
           conn!.initLogger();
         }
-        _connections[id]![connectionNumber] = conn!;
+        _connections[uid]![connectionNumber] = conn!;
       }
       _executeCommand(data, channel);
     });
@@ -78,7 +77,7 @@ class DownloadConnectionInvoker {
     DownloadIsolateMessage data,
     StreamChannel channel,
   ) {
-    final id = data.downloadItem.id;
+    final id = data.downloadItem.uid;
     if (data.command == DownloadCommand.pause) {
       stopCommandTrackerMap[id] = Pair(true, channel);
       _runCommandTrackerTimer();
@@ -93,7 +92,7 @@ class DownloadConnectionInvoker {
     DownloadIsolateMessage data,
     IsolateChannel channel,
   ) {
-    final id = data.downloadItem.id;
+    final id = data.downloadItem.uid;
     final connectionNumber = data.connectionNumber;
     final connection = _connections[id]![connectionNumber]!;
     connection.logger?.info(
@@ -164,7 +163,7 @@ class DownloadConnectionInvoker {
   }
 
   static bool shouldForceApplyReuseConnection(DownloadIsolateMessage message) {
-    final downloadId = message.downloadItem.id;
+    final downloadId = message.downloadItem.uid;
     return message.command == DownloadCommand.start &&
         forceApplyReuseConnections[downloadId] != null &&
         forceApplyReuseConnections[downloadId]!

@@ -1,4 +1,4 @@
-import 'package:brisk_engine/src/download_engine/download_command.dart';
+import 'package:brisk_engine/src/download_engine/constants/download_command.dart';
 import 'package:brisk_engine/src/download_engine/download_settings.dart';
 import 'package:brisk_engine/src/download_engine/model/download_item_model.dart';
 import 'package:brisk_engine/src/download_engine/segment/segment.dart';
@@ -22,11 +22,11 @@ class DownloadIsolateMessage {
 
   DownloadIsolateMessage clone() {
     return DownloadIsolateMessage(
-      command: this.command,
-      downloadItem: this.downloadItem,
-      segment: this.segment,
-      connectionNumber: this.connectionNumber,
-      settings: this.settings,
+      command: command,
+      downloadItem: downloadItem,
+      segment: segment,
+      connectionNumber: connectionNumber,
+      settings: settings,
     );
   }
 }

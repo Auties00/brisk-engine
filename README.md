@@ -6,7 +6,7 @@
 
 ## :gear: About Brisk Engine
 
-Brisk-Engine is the download engine that powers [Brisk Download Manager](https://github.com/AminBhst/brisk) now
+Brisk-Engine is the download engine that powers [Brisk Download Manager](https://github.com/AminBhst/brisk), now
 available as a separate library.
 It is written in pure dart and can be used in all devices without platform-specific dependencies.
 

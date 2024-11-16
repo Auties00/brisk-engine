@@ -12,11 +12,10 @@ It is written in pure dart and can be used on all devices without platform-speci
 
 ## :rocket: Features
 
-- **Dynamic Connection Spawn:** Downloads begin with a single connection, with more connections dynamically added on the
-  fly.
-- **Dynamic Connection Reuse:** Completed connections are reassigned to assist other active connections, maintaining the
-  maximum number of concurrent connections to maintaining the highest possible download speed.
+- **Dynamic Connection Spawn:** Downloads starts with a single connection and as they progress, new connections are added on the fly and without interfering with one another. This ensures that a higher number of connections are used only when necessary, significantly improving the download speed of small-to-medium sized files.
+- **Dynamic Connection Reuse:** After a connection completes receiving its designated byte range, it is immediately reassigned to assist another connection. This means that finished connections actively contribute to the overall download process by handling portions of other busy connections' byte ranges. As a result, the engine maintains as many active connections as possible, ensuring that download speeds remain consistently at their peak.
 - **Automatic connection reset:** Hanging connections will be reset automatically.
+
 
 ## Example Usage
 

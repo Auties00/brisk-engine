@@ -1,5 +1,6 @@
 ![GitHub License](https://img.shields.io/github/license/AminBhst/brisk-engine?style=flat-square)
 [![Pub](https://img.shields.io/pub/v/brisk_engine.svg?style=flat-square&include_prereleases)](https://pub.dev/packages/brisk_engine)
+<a href="https://discord.gg/3mpSsVWF"><img alt="Discord Chat" src="https://img.shields.io/discord/1298990692000989225?color=5865F2&label=discord&style=flat-square"></a>
 [![Telegram Channel](https://img.shields.io/badge/Channel-Telegram-blue.svg?logo=telegram&style=flat-square)](https://t.me/ryedev)
 
 <p align="center">

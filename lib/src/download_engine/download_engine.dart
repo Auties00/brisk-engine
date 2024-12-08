@@ -21,6 +21,10 @@ class DownloadEngine {
     _executeCommand(uid, DownloadCommand.start);
   }
 
+  static void cancel(String uid, bool force) {
+    _executeCommand(uid, force ? DownloadCommand.forceCancel : DownloadCommand.cancel);
+  }
+
   static void _executeCommand(String uid, DownloadCommand command) {
     final message = DownloadIsolateMessage(
       command: command,

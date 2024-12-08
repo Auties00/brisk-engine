@@ -1268,6 +1268,7 @@ class HttpDownloadEngine {
       fileName: fileInfo.fileName,
       downloadUrl: downloadUrl,
       progress: 0,
+      contentLength: fileInfo.contentLength
     );
   }
 
